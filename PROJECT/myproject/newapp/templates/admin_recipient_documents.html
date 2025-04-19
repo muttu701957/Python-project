@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Recipient Legal Documents Verification</h2>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+            transition: 0.3s;
+        }
+        .badge {
+            font-size: 14px;
+            padding: 6px 10px;
+        }
+        .btn-sm {
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+        .btn-outline-primary:hover, .btn-outline-danger:hover {
+            color: white !important;
+        }
+        /* Flexbox for side-by-side buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px; /* Adds space between buttons */
+            justify-content: center;
+        }
+    </style>
+
+    <!-- Recipient Legal Documents -->
+    <div class="card shadow-lg mb-5">
+        <div class="card-header bg-success text-white text-center">
+            <h3 class="mb-0">Recipient Legal Documents</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Recipient Name</th>
+                        <th>Document</th>
+                        <th>Uploaded At</th>
+                        <th>Verified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in recipient_docs %}
+                    <tr>
+                        <td>{{ doc.organ_request.recipient.full_name }}</td>
+                        <td><a href="{{ doc.file.url }}" target="_blank" class="btn btn-outline-primary btn-sm">View Document</a></td>
+                        <td>{{ doc.uploaded_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            {% if doc.verified %}
+                                <span class="badge bg-success">Verified</span>
+                            {% elif doc.rejected %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not doc.verified and not doc.rejected %}
+                                <div class="btn-group">
+                                    <form method="post" action="{% url 'update_document_status' doc.id 'recipient' 'verify' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm">Verify</button>
+                                    </form>
+                                    <form method="post" action="{% url 'update_document_status' doc.id 'recipient' 'reject' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-danger">No recipient legal documents found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

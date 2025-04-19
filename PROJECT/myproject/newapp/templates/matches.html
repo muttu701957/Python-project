@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transplant Matches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .confirm-btn {
+            background-color: blue;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Organ Transplant Matches</h2>
+    
+    <a href="{% url 'match_donors_and_recipients' %}">
+        <button>Run Matching Algorithm</button>
+    </a>
+
+    {% if matches %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Donor Name</th>
+                    <th>Organ</th>
+                    <th>Recipient Name</th>
+                    <th>Urgency Level</th>
+                    <th>Match Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                <tr>
+                    <td>{{ match.donor.donor.full_name }}</td>
+                    <td>{{ match.donor.organ }}</td>
+                    <td>{{ match.recipient.recipient.full_name }}</td>
+                    <td>{{ match.recipient.urgency_level }}</td>
+                    <td>{{ match.match_date|date:"Y-m-d H:i" }}</td>
+                    <td>{{ match.status }}</td>
+                    <td>
+                        {% if match.status == "Pending" %}
+                            <a href="{% url 'confirm_transplant' match.id %}">
+                                <button class="confirm-btn">Confirm</button>
+                            </a>
+                        {% else %}
+                            ✅ Completed
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No matches found.</p>
+    {% endif %}
+
+</body>
+</html>

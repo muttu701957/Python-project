@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Update Recipient Status</h2>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">New Matching Status</label>
+            <select class="form-control" name="matching_status">
+                <option value="Pending" {% if recipient.matching_status == "Pending" %}selected{% endif %}>Pending</option>
+                <option value="Matched" {% if recipient.matching_status == "Matched" %}selected{% endif %}>Matched</option>
+                <option value="Transplanted" {% if recipient.matching_status == "Transplanted" %}selected{% endif %}>Transplanted</option>
+                <option value="Rejected" {% if recipient.matching_status == "Rejected" %}selected{% endif %}>Rejected</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Status</button>
+    </form>
+</div>
+{% endblock %}

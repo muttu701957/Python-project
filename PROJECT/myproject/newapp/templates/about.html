@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Organ Donation System</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome (for social icons and icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      padding-top: 70px;
+      background: #f8f9fa;
+    }
+    .section-title {
+      margin-bottom: 30px;
+    }
+    .icon-bullet {
+      margin-right: 8px;
+      color: #0d6efd;
+    }
+    .card-profile {
+      background-color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .card-profile img {
+      display: block;
+      margin: 0 auto 15px;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #eaeaea;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .card-profile h5 {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    .card-profile p {
+      font-size: 0.95rem;
+    }
+
+    /* Slide-in effect */
+    .slide-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.6s ease-out;
+    }
+    .slide-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card {
+      padding: 20px;
+    }
+
+    .social-buttons a {
+      margin-top: 15px;
+    }
+  </style>
+
+  <!-- Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ✅ NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Organ Donation System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="container mt-5">
+    <!-- Section Title -->
+    <div class="text-center section-title">
+      <h1>About Organ Donation System</h1>
+      <p class="text-muted fs-5">Connecting donors and recipients to save lives efficiently.</p>
+    </div>
+  
+    <div class="row g-4">
+      <!-- LEFT SIDE: SYSTEM INFO -->
+      <div class="col-md-12">
+        <div class="card p-4 shadow-sm slide-up" data-aos="fade-up">
+          <h4><i class="fa-solid fa-circle-info text-primary icon-bullet"></i> What We Do</h4>
+          <p class="text-muted">
+            Our platform streamlines the organ donation process by providing a secure and efficient way to match donors with recipients based on medical compatibility, urgency, and location.
+          </p>
+        </div>
+  
+        <div class="card p-4 shadow-sm slide-up" data-aos="fade-up" data-aos-delay="100">
+          <h5 class="mt-4"><i class="fa-solid fa-bullseye text-success icon-bullet"></i> Our Mission</h5>
+          <p class="text-muted">
+            To improve access to life-saving organ transplants through a smart, technology-driven approach, ensuring fair and timely allocation of organs.
+          </p>
+        </div>
+  
+        <div class="card p-4 shadow-sm slide-up" data-aos="fade-up" data-aos-delay="200">
+          <h5 class="mt-4"><i class="fa-solid fa-star text-warning icon-bullet"></i> Why Choose Our System?</h5>
+          <ul class="mt-2">
+            <li>🩺 <strong>Medical Accuracy:</strong> Compatibility matching.</li>
+            <li>🔐 <strong>Secure & Transparent:</strong> Verified donor and recipient details.</li>
+            <li>⏳ <strong>Real-time Updates:</strong> Notifications on new donor availability.</li>
+            <li>🌍 <strong>Global Network:</strong> Hospitals and donors connected nationwide.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE CARD BELOW -->
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-8">
+        <div class="card card-profile p-4">
+          <img src="{% static 'images/profile.jpeg' %}" alt="Profile Picture">
+
+          <h4 class="mt-3">AKSHATA UMESH SAUNSHI</h4>
+          <p class="text-muted fs-6">🎓 BCA Student | 💻 Web Developer </p>
+  
+          <div class="text-start mt-3">
+            <h6><i class="fa-solid fa-circle-user text-primary"></i> About Me</h6>
+            <p>
+              I'm Akshata, a passionate developer with a focus on creating impactful tech solutions. This project aims to improve organ donation efficiency and transparency.
+            </p>
+            <ul>
+              <li>⚡ Skilled in Python, Django, and web development.</li>
+              <li>🔒 Focused on building scalable and secure applications.</li>
+              <li>🚀 Passionate about tech for healthcare and social good.</li>
+            </ul>
+          </div>
+  
+          <div class="social-buttons mt-3">
+            <a href="/contact" class="btn btn-outline-success btn-sm">
+              <i class="fas fa-envelope"></i> Contact Me
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ✅ FOOTER -->
+<footer class="mt-5 bg-dark text-white text-center py-3">
+  &copy; 2025 Organ Donation System. All Rights Reserved.
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- AOS Animation JS -->
+<script>
+  AOS.init({
+    duration: 1000,  // Animation duration
+    easing: 'ease-in-out',  // Easing for the animations
+    once: true,  // Animate only once
+    offset: 150  // Offset to trigger animation
+  });
+</script>
+
+</body>
+</html>

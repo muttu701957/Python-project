@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compensation Status</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #f0f8ff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .amount-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .status-icon {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="col-md-6 offset-md-3 mb-4">
+            <div class="card border-info">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-info">
+                        <i class="fas fa-dollar-sign"></i> Compensation Status
+                    </h5>
+                    
+                    {% if compensation %}
+                        <p class="card-text amount-text text-success">
+                            <i class="fas fa-check-circle status-icon text-success"></i>  
+                            Amount Received: <strong>${{ compensation.amount }}</strong>
+                        </p>
+                    {% else %}
+                        <p class="card-text amount-text text-danger">
+                            <i class="fas fa-exclamation-circle status-icon text-danger"></i>
+                            Payment Pending
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Dashboard Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'donor_dashboard' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

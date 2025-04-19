@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipient Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            display: flex;
+            background-color: #f0f8ff; /* Light Blue */
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #e3f2fd;
+            padding-top: 20px;
+            position: fixed;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar a {
+            color: #0d6efd;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #bbdefb;
+            border-left: 5px solid #0d6efd;
+            padding-left: 10px;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            width: 100%;
+            color: #333;
+        }
+        .card {
+            border-radius: 10px;
+            transition: 0.3s;
+            margin-bottom: 20px; 
+        }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4 class="text-center text-primary">🫀 Recipient Panel</h4>
+        <a href="{% url 'recipient_dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="{% url 'add_recipient' %}"><i class="fas fa-user-plus"></i> Add Details</a>
+        <a href="{% url 'organ_request' %}"><i class="fas fa-hand-holding-medical"></i> Organ Request</a>
+    
+        <!-- Always show View Profile & Update Profile -->
+        <a href="{% if recipient and recipient.id %}{% url 'recipient_profile' recipient.id %}{% else %}{% url 'add_recipient' %}{% endif %}">
+            <i class="fas fa-user"></i> View Profile
+        </a>
+        <a href="{% if recipient and recipient.id %}{% url 'update_recipient' recipient.id %}{% else %}{% url 'add_recipient' %}{% endif %}">
+            <i class="fas fa-user-edit"></i> Update Profile
+        </a>
+    
+        <a href="{% url 'recipient_notifications' %}"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="{% url 'user_logout' %}" class="text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <h2 class="mb-3"><i class="fas fa-heartbeat"></i> Recipient Dashboard</h2>
+        <p>💙 Stay updated on your organ donation status.</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="fas fa-list-alt"></i> Total Requests</h5>
+                        <p class="card-text">
+                            {% if total_requests > 0 %}
+                                You have {{ total_requests }} pending request(s).
+                            {% else %}
+                                No requests submitted yet.
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'view_requests' %}" class="btn btn-primary">View Requests</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+    <div class="card border-success">
+        <div class="card-body">
+            <h5 class="card-title text-success"><i class="fas fa-heart"></i> Matched Donors</h5>
+            <p class="card-text">
+                {% if matched_donors > 0 %}
+                    You have {{ matched_donors }} matched donor(s).
+                {% else %}
+                    No donor matches found.
+                {% endif %}
+            </p>
+            <a href="{% if recipient and recipient.id %}{% url 'matching_status' recipient.id %}{% else %}#{% endif %}" 
+   class="btn btn-success {% if not recipient or not recipient.id %}disabled{% endif %}">
+   Check Matches
+</a>
+
+        </div>
+    </div>
+</div>
+
+            <div class="col-md-4">
+                <div class="card border-warning">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning"><i class="fas fa-bell"></i> Notifications</h5>
+                        <p class="card-text">
+                            {% if notification_count > 0 %}
+                                You have {{ notification_count }} new notification.
+                            {% else %}
+                                No new notifications.
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'recipient_notifications' %}" class="btn btn-warning">View Notifications</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger"><i class="fas fa-hospital"></i> Transplant Status</h5>
+                        {% if transplant %}
+                            <p class="card-text">
+                                Your transplant is scheduled
+                            </p>
+                            <a href="{% url 'transplant_status' transplant.id %}" class="btn btn-danger">View Status</a>
+                        {% else %}
+                            <p class="card-text">No transplant scheduled yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

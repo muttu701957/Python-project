@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-success fw-bold">🫀 Donors List by Organ</h2>
+    <p class="text-center text-muted">Below is the count of donors for each organ.</p>
+
+    <div class="row">
+        {% for organ in organ_donor_counts %}
+        <div class="col-md-6">
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">🦴 {{ organ.organ__name }}</h5>
+                    <p class="card-text">
+                        <strong>🧑‍🤝‍🧑 Donor Count:</strong> {{ organ.donor_count }}
+                    </p>
+
+                    <!-- Donor List -->
+                    <ul class="list-group">
+                        {% for donor in organ_donors|get_item:organ.organ__name %}
+                            <li class="list-group-item">
+                                <strong>{{ donor.donor__name }}</strong> - 📧 {{ donor.donor__email }}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">No donors yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

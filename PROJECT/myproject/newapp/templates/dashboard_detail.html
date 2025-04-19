@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+        .card-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            padding: 0 5%;
+        }
+        .card {
+            border: none;
+            border-radius: 1rem;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        .card h5 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .pending { background-color: #f39c12; }
+        .success { background-color: #27ae60; }
+        .active { background-color: #3498db; }
+        .notification { background-color: #e74c3c; }
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0;
+        }
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-title">
+        📊 System Dashboard Info
+    </div>
+
+    <div class="card-box">
+        <div class="card pending">
+            <h5>Pending Matches</h5>
+            <p>{{ pending_matches }}</p>
+        </div>
+        <div class="card success">
+            <h5>Successful Transplants</h5>
+            <p>{{ successful_transplants }}</p>
+        </div>
+        <div class="card active">
+            <h5>Active Users</h5>
+            <p>{{ active_users }}</p>
+        </div>
+        <div class="card notification">
+            <h5>Unread Notifications</h5>
+            <p>{{ unread_notifications }}</p>
+        </div>
+    </div>
+
+    <!-- 🟠 Pending Matches Table -->
+    <div class="container">
+        <h4 class="section-title">🟠 Pending Matches</h4>
+        {% if pending_recipients %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Recipient Name</th>
+                            <th>Organ Needed</th>
+                            <th>Blood Group</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pending in pending_recipients %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ pending.recipient.full_name }}</td>
+                            <td>{{ pending.organ_neededrequest.name|default:"Not Specified" }}</td>
+                            <td>{{ pending.recipient.blood_type|default:"N/A" }}</td>
+                            <td><span class="badge bg-warning text-dark">{{ pending.recipient.matching_status }}</span></td>
+                            <td>
+                                <a href="{% url 'match_donor_to_recipient' pending.recipient.id %}" class="btn btn-primary btn-sm">Find Donor</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No pending matches found.</p>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Successful Transplants -->
+    <div class="container">
+        <h4 class="section-title">✅ Successful Transplants</h4>
+        {% if successful_transplant_list %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Recipient</th>
+                            <th>Donor</th>
+                            <th>Organ</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transplant in successful_transplant_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ transplant.recipient.full_name }}</td>
+                            <!-- <td>{{ transplant.donor.full_name }}</td> -->
+                            <!-- Show Donor Name only for Living Donations -->
+        <td>
+            {% if transplant.living_donation and transplant.donor %}
+                {{ transplant.donor.full_name }}
+            {% else %}
+                <span class="text-muted">N/A</span>
+            {% endif %}
+        </td>
+                            <td>{{ transplant.recipient.organs_needed.first.organ_neededrequest.name|default:"Not Specified" }}</td>
+                            <td>{{ transplant.transplant_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No successful transplants found.</p>
+        {% endif %}
+    </div>
+
+    <!-- 👤 Active Users -->
+    <div class="container">
+        <h4 class="section-title">👤 Active Users</h4>
+        {% if active_user_list %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>User Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in active_user_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.full_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.user_type }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No active users found.</p>
+        {% endif %}
+    </div>
+
+    <!-- 🔔 Unread Notifications -->
+    <div class="container">
+        <h4 class="section-title">🔔 Unread Notifications</h4>
+        {% if unread_notification_list %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Message</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in unread_notification_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ note.message }}</td>
+                            <td>{{ note.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No unread notifications.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary back-btn">Back to Dashboard</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

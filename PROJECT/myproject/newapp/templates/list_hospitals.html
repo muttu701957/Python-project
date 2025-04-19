@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">🏥 List of Hospitals</h2>
+
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Hospital Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Available Beds</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hospital in hospitals %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ hospital.name }}</td>
+                <td>{{ hospital.email }}</td>
+                <td>{{ hospital.contact_number }}</td>
+                <td>{{ hospital.city }}, {{ hospital.state }}</td>
+                <td>{{ hospital.available_beds }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No hospitals found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary mt-3">🔙 Back to Dashboard</a>
+</div>
+{% endblock %}

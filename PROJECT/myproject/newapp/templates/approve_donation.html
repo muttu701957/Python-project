@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Approve Living Donation</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <p>Donor: {{ donation.donor.full_name }}</p>
+        <p>Organ: {{ donation.organ }}</p>
+        <label>Approve Donation</label>
+        <input type="checkbox" name="approval_status">
+        <br><br>
+        <button type="submit" class="btn btn-success">Approve</button>
+    </form>
+</div>
+{% endblock %}

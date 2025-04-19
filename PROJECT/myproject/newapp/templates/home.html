@@ -1,0 +1,174 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation & Transplant Matching System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<section class="hero">
+  <div class="hero-content">
+      <h1>Welcome to the Organ Donation & Transplant Matching System</h1>
+      <p>Connecting organ donors with recipients in need through a seamless and efficient matching process.</p>
+      <a href="{% url 'home' %}" class="btn">Get Started</a>
+  </div>
+</section>
+</body>
+</html> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🫀 Organ Donation & Transplant Matching</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 10%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-section h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideFadeIn 1.5s ease-in-out;
+    }
+    .hero-section p {
+      font-size: 1.4rem;
+      max-width: 900px;
+      margin: 20px auto;
+      animation: fadeUp 2s ease-in-out;
+    }
+    .emoji-fade-container {
+      position: absolute;
+      top: 75%;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5rem;
+      z-index: 3;
+    }
+    .emoji-fade-container span {
+      display: inline-block;
+      opacity: 0;
+      animation: showEmoji 8s linear infinite;
+    }
+    .emoji-fade-container span:nth-child(1) { animation-delay: 0s; }
+    .emoji-fade-container span:nth-child(2) { animation-delay: 1s; }
+    .emoji-fade-container span:nth-child(3) { animation-delay: 2s; }
+    .emoji-fade-container span:nth-child(4) { animation-delay: 3s; }
+    .emoji-fade-container span:nth-child(5) { animation-delay: 4s; }
+    .emoji-fade-container span:nth-child(6) { animation-delay: 5s; }
+    .emoji-fade-container span:nth-child(7) { animation-delay: 6s; }
+    .emoji-fade-container span:nth-child(8) { animation-delay: 7s; }
+
+    @keyframes showEmoji {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      20% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 0; }
+    }
+
+    .btn-launch {
+      background-color: #00e5ff;
+      color: #000;
+      font-weight: bold;
+      padding: 12px 28px;
+      font-size: 1.2rem;
+      border-radius: 40px;
+      margin-top: 30px;
+      transition: all 0.3s ease-in-out;
+      animation: bounceBtn 2s ease-in-out infinite;
+    }
+    .btn-launch:hover {
+      background-color: #1de9b6;
+      transform: scale(1.1);
+    }
+    .scroll-down {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      color: #00e5ff;
+      animation: scrollPulse 2s infinite ease-in-out;
+    }
+    .scroll-down i {
+      display: block;
+      font-size: 1.5rem;
+      margin-top: 5px;
+    }
+    .project-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
+    .project-logo img {
+      height: 55px;
+      width: auto;
+    }
+    @keyframes slideFadeIn {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounceBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      50% { transform: translateX(-50%) translateY(10px); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910796.png" alt="Organ Donation Logo">
+  </div>
+  <div class="hero-section">
+    <h1>Organ Donation & Transplant Matching</h1>
+    <p>
+      Connecting Lives, Saving Futures: Efficient Organ Donor & Transplant Matching System.
+    </p>
+    <a href="{% url 'home1' %}" class="btn btn-launch">🫀 Get started</a>
+  </div>
+  <div class="emoji-fade-container">
+    <span>🫁</span>
+    <span>🫀</span>
+    <span>💉</span>
+    <span>🏥</span>
+    <span>📋</span>
+    <span>🔬</span>
+    <span>📞</span>
+    <span>❤️</span>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

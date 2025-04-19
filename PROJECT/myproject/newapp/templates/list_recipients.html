@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Recipient List (Prioritized by Urgency)</h2>
+
+    <!-- Display any success/error messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Blood Type</th>
+                <th>Organ Needed</th>
+                <th>Urgency Level</th>
+                <th>Matching Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipient_needed in recipients %}
+            <tr>
+                <td>{{ recipient_needed.recipient.full_name }}</td>
+                <td>{{ recipient_needed.recipient.email }}</td>
+                <td>{{ recipient_needed.recipient.blood_type }}</td>
+
+                <!-- Organ Needed -->
+                <td>
+                    {{ recipient_needed.organ_neededrequest.name|default:"Not Specified" }}
+                </td>
+
+                <!-- Urgency Level -->
+                <td>
+                    <strong>
+                        <span class="badge 
+                            {% if recipient_needed.urgency_level == 'Critical' %} bg-danger 
+                            {% elif recipient_needed.urgency_level == 'High' %} bg-warning 
+                            {% elif recipient_needed.urgency_level == 'Moderate' %} bg-info 
+                            {% elif recipient_needed.urgency_level == 'Low' %} bg-secondary 
+                            {% else %} bg-light text-dark {% endif %}">
+                            {{ recipient_needed.urgency_level|default:"Not Set" }}
+                        </span>
+                    </strong>
+                </td>
+
+                <!-- Matching Status -->
+                <td>
+                    <span class="badge 
+                        {% if recipient_needed.recipient.matching_status == 'Transplanted' %} bg-success 
+                        {% elif recipient_needed.recipient.matching_status == 'Matched' %} bg-primary 
+                        {% else %} bg-warning text-dark {% endif %}">
+                        {{ recipient_needed.recipient.matching_status|default:"Pending" }}
+                    </span>
+                    
+                    {% if recipient_needed.recipient.matching_status == 'Matched' %}
+                        <br>
+                        {% if recipient_needed.recipient.matches.first %}
+                            {% with recipient_needed.recipient.matches.first as match %}
+                                Donor: {{ match.donor.full_name|default:"Unknown Donor" }} <br>
+                                
+                                <!-- Determine Donation Type -->
+                                {% if match.donor.living_donations.exists %}
+                                    <span class="badge bg-success">Living Donation</span>
+                                {% elif match.donor.deceased_donations.exists %}
+                                    <span class="badge bg-dark">Deceased Donation</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Unknown Donation</span>
+                                {% endif %}
+                                
+                            {% endwith %}
+                        {% endif %}
+                    {% endif %}
+                </td>
+
+                <!-- Actions -->
+                <td>
+                    {% if recipient_needed.recipient.matching_status == 'Matched' %}
+                        <a href="{% url 'complete_transplant' recipient_needed.recipient.id %}" class="btn btn-success btn-sm">
+                            Complete Transplant
+                        </a>
+                    {% elif recipient_needed.recipient.matching_status == 'Pending' %}
+                        <a href="{% url 'match_donor_to_recipient' recipient_needed.recipient.id %}" class="btn btn-primary btn-sm">
+                            Find Donor
+                        </a>
+                    {% elif recipient_needed.recipient.matching_status == 'Transplanted' %}
+                        <span class="text-muted">Transplanted</span>
+                    {% else %}
+                        <span class="text-muted">No Action</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">No recipients found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

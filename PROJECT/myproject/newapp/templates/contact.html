@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Contact Us</h2>
+    <p class="text-center">Have questions? Feel free to reach out to us!</p>
+
+    <form method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="contact_type" class="form-label">I am a</label>
+            <select class="form-select" id="contact_type" name="contact_type" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="Donor">Donor</option>
+                <option value="Recipient">Recipient</option>
+            </select>
+        </div>
+        
+
+        <div class="mb-3">
+            <label for="message" class="form-label">Your Message</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+
+    <div class="mt-4">
+        <h4>📍Akshata Saunshi</h4>
+        <p>Hubli , karnataka, India</p>
+        <p>📧 Email: akshatasaunshi10@gmail.com</p>
+        <p>📞 Phone: +91 7975618294</p>
+    </div>
+</div>
+{% endblock %}

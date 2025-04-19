@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background: url("/static/images/bggg.jpg") no-repeat center center/cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .register-container {
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .register-container label {
+            text-align: left;
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .register-container .form-control {
+            padding-left: 40px;
+        }
+
+        .input-group-text {
+            width: 40px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h3 class="fw-bold">Hospital Registration</h3>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="{% url 'hospital_register' %}">
+            {% csrf_token %}
+            <div class="mb-3 text-start">
+                <label class="form-label">Username:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+                </div>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label class="form-label">Email:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                </div>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label class="form-label">Password:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                    <input type="password" name="password1" class="form-control" placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label class="form-label">Confirm Password:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                    <input type="password" name="password2" class="form-control" placeholder="Confirm password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <div class="text-center mt-3">
+            Already have an account? <a href="{% url 'user_login' %}" class="text-decoration-none fw-bold">Login here</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

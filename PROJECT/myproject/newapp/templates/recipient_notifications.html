@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🔔 Your Notifications</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if notifications %}
+                {% for notification in notifications %}
+                    <div class="alert alert-info shadow-sm animate__animated animate__fadeInUp" role="alert">
+                        <strong>{{ notification.title }}</strong>
+                        <p>{{ notification.message }}</p>
+                        <small class="text-muted">📅 {{ notification.date }}</small>
+                        
+                        {% if notification.status == "unread" %}
+                        <form method="POST" action="{% url 'respond_to_notification' notification.id %}" class="mt-2">
+                            {% csrf_token %}
+                            <button type="submit" name="response" value="confirm" class="btn btn-success btn-sm">✅ Confirm</button>
+                            <button type="submit" name="response" value="reject" class="btn btn-danger btn-sm">❌ Reject</button>
+                        </form>
+                        {% elif notification.response == "confirmed" %}
+                            <span class="badge bg-success">Confirmed</span>
+                        {% elif notification.response == "rejected" %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning text-center animate__animated animate__fadeIn">
+                    No new notifications at the moment. Check back later!
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'recipient_dashboard' %}" class="btn btn-primary">⬅ Back to Dashboard</a>
+    </div>
+</div>
+
+<!-- Include Animate.css for smooth animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+{% endblock %}

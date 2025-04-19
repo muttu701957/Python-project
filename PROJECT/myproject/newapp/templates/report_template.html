@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transplant Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Transplant Report</h1>
+    <table>
+        <tr><th>Recipient Name</th><td>{{ recipient_name }}</td></tr>
+
+        {% if donor_name %}  <!-- Only show if it is a Living Donation -->
+        <tr><th>Living Donor Name</th><td>{{ donor_name }}</td></tr>
+        {% endif %}
+
+        <tr><th>Transplant Date</th><td>{{ transplant_date }}</td></tr>
+        <tr><th>Hospital</th><td>{{ hospital_name }}</td></tr>
+        <tr><th>Status</th><td>{{ status }}</td></tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Transplant Updates</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th>Recipient Name</th>
+                    <th>Donor Name</th>
+                    <th>Hospital</th>
+                    <th>Transplant Date</th>
+                    <th>Status</th>
+                    <th>Recipient Attended</th>
+                    <th>Donor Attended</th>
+                    <th>Success</th>
+                    <th>Report</th>
+                    <th>Compensation</th> <!-- ✅ Compensation Column -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for transplant in transplants %}
+                <tr>
+                    <td>{{ transplant.recipient.user.username }}</td>
+
+                    <!-- Show Donor Name only for Living Donations -->
+                    <td>
+                        {% if transplant.living_donation and transplant.donor %}
+                            {{ transplant.donor.user.username }}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ transplant.hospital.name }}</td>
+                    <td>{{ transplant.transplant_date }}</td>
+
+                    <td class="fw-bold {% if transplant.status == 'Completed' %}text-success{% else %}text-warning{% endif %}">
+                        {{ transplant.status }}
+                    </td>
+
+                    <!-- Recipient Attendance -->
+                    <td class="fw-bold">
+                        {% if transplant.recipient_attended %}
+                            <span class="text-success">✅</span>
+                        {% else %}
+                            <span class="text-danger">❌</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Donor Attendance (Only for Living Donation) -->
+                    <td class="fw-bold">
+                        {% if transplant.living_donation %}
+                            {% if transplant.donor_attended %}
+                                <span class="text-success">✅</span>
+                            {% else %}
+                                <span class="text-danger">❌</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Success Status -->
+                    <td>
+                        {% if transplant.recipient_attended %}
+                            {% if not transplant.living_donation or transplant.donor_attended %}
+                                {% if transplant.status == "Completed" %}
+                                    <span class="text-success fw-bold">✅</span>
+                                {% else %}
+                                    <a href="{% url 'mark_transplant_success' transplant.id %}" class="btn btn-sm btn-outline-success">
+                                        Mark as Successful
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-danger">Pending</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-danger">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- ✅ Report Generation Section -->
+                    <td>
+                        {% if transplant.status == "Completed" %}
+                            {% if transplant.report %}
+                                <a href="{{ transplant.report.file_path }}" class="btn btn-success btn-sm" download>📄 Download Report</a>
+                            {% else %}
+                                <a href="{% url 'generate_report' transplant.id %}" class="btn btn-primary btn-sm">📝 Generate Report</a>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- ✅ Compensation Section -->
+                    <td>
+                        {% if transplant.living_donation %}
+                            {% if transplant.donor.compensation %}
+                                <span class="text-success">✅ ${{ transplant.donor.compensation.amount }}</span>
+                            {% else %}
+                                <a href="{% url 'add_payment_page' transplant.id %}" class="btn btn-warning btn-sm">Add Payment</a>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+                    
+                {% empty %}
+                <tr>
+                    <td colspan="10" class="text-center text-danger">No transplant records available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-primary">⬅ Back to Dashboard</a>
+    </div>
+</div>
+<script>
+    document.querySelectorAll(".add-payment-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let form = this.nextElementSibling;
+            form.classList.toggle("d-none");
+        });
+    });
+</script>
+
+{% endblock %}

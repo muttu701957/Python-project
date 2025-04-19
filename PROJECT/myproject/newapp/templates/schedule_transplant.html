@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule Transplant</title>
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #333;
+        }
+
+        select,
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-top: 8px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            transition: 0.2s ease-in-out;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0056b3, #003f7f);
+        }
+
+        .errorlist {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+            list-style: none;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Schedule Transplant</h2>
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Recipient -->
+            <label for="id_recipient">Select Recipient:</label>
+            {{ form.recipient.errors }}
+            {{ form.recipient }}
+
+            <!-- Donor -->
+            <label for="id_donor">Select Living Donor:</label>
+            {{ form.donor.errors }}
+            {{ form.donor }}
+
+            <!-- Hospital -->
+            <label for="id_hospital">Hospital:</label>
+            {{ form.hospital.errors }}
+            {{ form.hospital }}
+
+            <!-- Transplant Date -->
+            <label for="id_transplant_date">Transplant Date:</label>
+            {{ form.transplant_date.errors }}
+            {{ form.transplant_date }}
+
+            <!-- Status -->
+            <label for="id_status">Status:</label>
+            {{ form.status.errors }}
+            {{ form.status }}
+
+            <!-- Submit Button -->
+            <button type="submit">Schedule</button>
+        </form>
+    </div>
+</body>
+</html>

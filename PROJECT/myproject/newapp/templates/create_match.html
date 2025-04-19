@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Match</title>
+
+    <!-- Link to Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJp3XG7sP0aI8KJ6DJUOni4yAl1q5o9Goq53+zDqMzRk5+NN7HeV+CT0XM4b" crossorigin="anonymous">
+
+    <!-- Custom CSS for styling -->
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Header Styling */
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            background-color: #007bff;
+            padding: 40px 0;
+            font-size: 40px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Styling */
+        .container {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <h1>Create a New Transplant Match</h1>
+
+    <!-- Form Section -->
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="donor">Donor:</label>
+                <select name="donor" id="donor">
+                    {% if donors %}
+                        {% for donor in donors %}
+                            <option value="{{ donor.id }}">{{ donor.organ }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option>No donors available</option>
+                    {% endif %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="recipient">Recipient:</label>
+                <select name="recipient" id="recipient">
+                    {% if recipients %}
+                        {% for recipient in recipients %}
+                            <!-- Directly access full_name here -->
+                            <option value="{{ recipient.id }}">{{ recipient.recipient.full_name }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option>No recipients available</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <button type="submit">Create Match</button>
+        </form>
+
+        <!-- Back to Match List Link -->
+        <a href="{% url 'match_list' %}" class="back-link">Back to Matches List</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-KyZXEJp3XG7sP0aI8KJ6DJUOni4yAl1q5o9Goq53+zDqMzRk5+NN7HeV+CT0XM4b" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-d7a9be9cb3c9c6a39f32e16a01a9e5ad9ff00b4d153f684905f717406c81cfa8" crossorigin="anonymous"></script>
+
+</body>
+</html>

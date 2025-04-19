@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-user-md"></i> Matched Donors for {{ recipient.full_name }}</h2>
+
+    {% if matches %}
+        <div class="card mt-3 p-3">
+            <ul class="list-group">
+                {% for match in matches %}
+                    <li class="list-group-item">
+                        <strong>Donor Name:</strong> {{ match.donor }} <br>
+                        <strong>Organ Donated:</strong> {{ match.organ_name }} <br>
+                        <strong>Donor Type:</strong> 
+                        {% if match.donation_type == "Living" %}
+                            <span class="badge bg-success">Living Donor</span>
+                        {% else %}
+                            <span class="badge bg-danger">Deceased Donor</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p class="text-danger mt-3">No donor matches found.</p>
+    {% endif %}
+
+    <a href="{% url 'recipient_dashboard' %}" class="btn btn-secondary mt-3"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+</div>
+{% endblock %}

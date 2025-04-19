@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("/static/images/bg3.jpg") no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInBackground 3s ease-in-out;
+        }
+
+        @keyframes fadeInBackground {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .registration-card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            transform: translateY(-50px);
+            opacity: 0;
+            animation: slideIn 1s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .registration-card h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            animation: fadeInText 2s ease-in-out;
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+            transform: scale(1.05);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .registration-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-top: 20px;
+            color: #666;
+            animation: fadeInText 3s ease-in-out;
+        }
+
+        .footer-text a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-card">
+        <h2>Select Registration Type</h2>
+        <div class="registration-options">
+            <a href="/donor_register" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Donor Registration
+            </a>
+            <a href="/recipient_register" class="btn btn-primary">
+                <i class="fas fa-user-check"></i> Recipient Registration
+            </a>
+        </div>
+        <div class="footer-text">
+            Already have an account? <a href="/login" class="text-decoration-none">Login here</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

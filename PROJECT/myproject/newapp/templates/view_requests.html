@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Organ Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>My Organ Requests</h2>
+
+    {% if requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Organ Type</th>
+                    <th>Urgency Level</th>
+                    <th>Requested Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.id }}</td>
+                    <td>{{ request.organ_neededrequest }}</td>
+                    <td>{{ request.urgency_level }}</td>
+                    <td>{{ request.requested_date|date:"Y-m-d" }}</td>  <!-- ✅ Use requested_date -->
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No organ requests found.</p>
+    {% endif %}
+
+</body>
+</html>

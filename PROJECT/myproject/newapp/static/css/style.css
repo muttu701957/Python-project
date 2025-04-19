@@ -1,0 +1,388 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("/static/images/bg3.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    animation: fadeIn 1.5s ease-in-out;
+    position: relative;
+}
+
+/* Overlay for better readability */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Navigation Bar */
+nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+nav .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: orange;
+    border-radius: 5px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+}
+
+hero h1 {
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.hero p {
+    font-size: 18px;
+    margin: 10px 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Button */
+.btn {
+    background: linear-gradient(45deg, #ff5722, #ff9800);
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: linear-gradient(45deg, #e64a19, #f57c00);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 87, 34, 0.8);
+}
+
+/* Form Box */
+.form-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 380px;
+    position: relative;
+    animation: slideUp 0.8s ease-in-out;
+    z-index: 2;
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Signup Header */
+.form-box h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.form-box input {
+    width: 90%;
+    padding: 12px;
+    margin: 10px auto;
+    display: block;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-box input:focus {
+    border: 2px solid #ff5722;
+    box-shadow: 0 0 12px rgba(255, 87, 34, 0.6);
+    transform: scale(1.05);
+}
+
+/* Buttons */
+.form-box button {
+    background: linear-gradient(45deg, #ff5722, #ff9800);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 95%;
+    border-radius: 6px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-box button:hover {
+    background: linear-gradient(45deg, #e64a19, #f57c00);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 87, 34, 0.8);
+}
+
+/* Login Link */
+.form-box p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.form-box a {
+    color: #3f51b5;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.form-box a:hover {
+    text-decoration: underline;
+    color: #ff5722;
+    transform: scale(1.1);
+}
+
+/* About Section */
+.about-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);  /* Dark transparent background */
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.about {
+    position: relative;
+    background: url("{% static 'images/about-bg.jpg' %}") no-repeat center center/cover;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.about::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);  /* Dark overlay */
+    z-index: 1;
+}
+
+.about-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1); /* Light transparent box */
+    border-radius: 10px;
+    backdrop-filter: blur(5px); /* Glass effect */
+}
+
+.about h1, .about h2, .about p, .about ul li {
+    color: white !important; /* Ensures all text is visible */
+    font-weight: bold;
+}
+
+.about ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 18px;
+}
+/* Ensure dropdown looks same as other inputs */
+.styled-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    display: block;
+    appearance: none;
+    outline: none;
+}
+
+/* Add custom dropdown arrow */
+.styled-select::after {
+    content: '\25BC'; /* Unicode for downward arrow */
+    font-size: 16px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    pointer-events: none;
+}
+
+/* Hover & Focus Effect */
+.styled-select:focus {
+    border-color: #ff6600;
+}
+select {
+    width: 98%;
+    padding: 14px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+/* Reduce space between Date of Birth, Gender, and Contact Number */
+input[name="dob"], select[name="gender"], input[name="contact"] {
+    margin-top: 5px; /* Reduce top margin */
+    margin-bottom: 5px; /* Reduce bottom margin */
+}
+.card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background-color: #F8F9FA;
+}
+
+.logout-btn {
+    background-color: #DC3545;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background-color: #C82333;
+}
+/* Fix Navbar Position */
+.navbar {
+    padding: 10px 0;
+}
+
+/* Ensure Navbar is Fixed on Top */
+.navbar.fixed-top {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Hero Section Full-Screen */
+#hero-carousel {
+    margin-top: 56px; /* To prevent overlap with navbar */
+    width: 100%;
+    height: 100vh;
+}
+
+/* Adjust Hero Image */
+#hero-carousel .carousel-item {
+    height: 100vh;
+    position: relative;
+}
+
+/* Make Images Fit Full-Screen */
+#hero-carousel .carousel-item img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Center Text in Carousel */
+#hero-carousel .carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #hero-carousel .carousel-caption {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+
+
+
+

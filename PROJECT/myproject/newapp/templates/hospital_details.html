@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 mx-auto" style="max-width: 800px;">
+        <h2 class="text-center text-primary fw-bold mb-4">🏥 Add Hospital Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Hospital Name & Location -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Hospital Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-hospital"></i></span>
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Location</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                    {{ form.location }}
+                </div>
+            </div>
+
+            <!-- Contact & Email -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contact Number</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                    {{ form.contact_number }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <!-- Total Beds & Available Beds -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Total Beds</label>
+                    {{ form.total_beds }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Available Beds</label>
+                    {{ form.available_beds }}
+                </div>
+            </div>
+
+            <!-- Emergency Facilities -->
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-semibold">Emergency Facilities</label>
+                {{ form.emergency_facilities }}
+            </div>
+
+            <h4 class="mt-4 text-primary">🌍 Location Details</h4>
+
+            <!-- Country -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Country</label>
+                <select class="form-select border-primary" name="country" id="country" required>
+                    <option value="India" selected>India</option>
+                </select>
+            </div>
+
+            <!-- State -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">State</label>
+                <select class="form-select border-primary" name="state" id="state" required>
+                    <option value="Karnataka" selected>Karnataka</option> <!-- ✅ Karnataka set as default -->
+                </select>
+            </div>
+
+            <!-- City -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">City</label>
+                <select class="form-select border-primary" name="city" id="city" required>
+                    <option value="">Select City</option>
+                </select>
+            </div>
+
+            <!-- Pincode -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Pincode</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                    {{ form.pincode }}
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-lg btn-primary shadow-sm">
+                    <i class="bi bi-save-fill"></i> Save Details
+                </button>
+                <a href="{% url 'hospital_dashboard' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+<!-- JavaScript for District Selection (Only Karnataka) -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var karnatakaDistricts = [
+        "Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar",
+        "Chamarajanagar", "Chikkaballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada",
+        "Davangere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu",
+        "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara",
+        "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"
+    ];
+
+    var citySelect = document.getElementById("city");
+
+    // Populate city dropdown with Karnataka districts
+    karnatakaDistricts.forEach(function(city) {
+        var option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+    });
+
+});
+</script>
+
+{% endblock %}

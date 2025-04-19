@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-warning">🔔 Admin Notifications</h2>
+
+    <!-- Form to Send Notifications -->
+    <div class="card mt-4 p-4 shadow">
+        <h4>Send a Notification</h4>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Recipient / Living Donor Dropdown -->
+            <div class="mb-3">
+                <label for="id_recipient" class="form-label"><strong>Recipient / Living Donor:</strong></label>
+                <select name="user_id" id="id_recipient" class="form-select" required>
+                    {% if recipients or living_donors %}
+                        <optgroup label="Recipients">
+                            {% for recipient in recipients %}
+                                {% if recipient.user %}
+                                    <option value="{{ recipient.user.id }}">{{ recipient.user.username }} (Recipient)</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="Living Donors">
+                            {% for donor in living_donors %}
+                                {% if donor.user %}
+                                    <option value="{{ donor.user.id }}">{{ donor.user.username }} (Living Donor)</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                    {% else %}
+                        <option disabled>No recipients or living donors available</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- Message Field -->
+            <div class="mb-3">
+                <label for="id_message" class="form-label"><strong>Message:</strong></label>
+                <textarea name="message" id="id_message" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">Send Notification</button>
+        </form>
+    </div>
+
+    <!-- List of Sent Notifications -->
+    <div class="mt-5">
+        <h4>📌 Sent Notifications</h4>
+        <ul class="list-group">
+            {% for notification in notifications %}
+                <li class="list-group-item">
+                    <strong>{{ notification.created_at|date:"Y-m-d H:i" }}</strong> - 
+                    <strong>To:</strong> {{ notification.user.username }} - 
+                    {{ notification.message }} 
+                    
+                    {% if notification.status == 'unread' %}
+                        <span class="badge bg-danger">Unread</span>
+                    {% else %}
+                        <span class="badge bg-success">Read</span>
+                    {% endif %}
+
+                    <!-- Show Response Status -->
+                    {% if notification.response == 'confirmed' %}
+                        <span class="badge bg-primary">Confirmed</span>
+                    {% elif notification.response == 'rejected' %}
+                        <span class="badge bg-dark">Rejected</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Pending</span>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center text-muted">
+                    <i class="fas fa-exclamation-circle"></i> No notifications sent yet.
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

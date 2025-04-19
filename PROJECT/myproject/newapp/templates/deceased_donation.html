@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger fw-bold">⚰️ Deceased Donation Form</h2>
+    <p class="text-center text-muted">Please fill in the required details for organ donation.</p>
+
+    <div class="card shadow-lg p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="donor_id" value="{{ donor.id }}">
+
+            <!-- ✅ Dynamic Organ Selection -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select Organ</label>
+                <select class="form-select border-danger" name="organ" required>
+                    <option value="" disabled selected>🔽 Choose an Organ</option>
+                    {% for organ in organs %}
+                        <option value="{{ organ.id }}">{{ organ.name }}</option>
+                    {% empty %}
+                        <option disabled>No organs available</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- ✅ Health Conditions (Yes/No) -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">Do you have any of the following conditions?</label>
+                <div class="list-group">
+                    {% for feature in health_features %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">{{ feature|title }}</span>  
+                        <div class="btn-group" role="group">
+                            <input type="radio" class="btn-check" name="{{ feature }}" value="Yes" id="{{ feature }}-yes" required>
+                            <label class="btn btn-outline-success" for="{{ feature }}-yes">✔️ Yes</label>
+
+                            <input type="radio" class="btn-check" name="{{ feature }}" value="No" id="{{ feature }}-no" required>
+                            <label class="btn btn-outline-danger" for="{{ feature }}-no">❌ No</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ✅ File Upload Section -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">Upload Supporting Documents (Medical Reports, ID Proof, etc.)</label>
+                <input type="file" name="files" multiple class="form-control border-danger">
+                <small class="text-muted">📎 You can upload multiple files.</small>
+            </div>
+
+            <!-- ✅ Submit Button -->
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-lg btn-danger shadow-sm">
+                    📝 Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

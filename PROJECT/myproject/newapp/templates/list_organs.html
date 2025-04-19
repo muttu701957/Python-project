@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">📜 List of Organs</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Organ Name</th>
+                <th>Donor Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for organ in organ_donor_counts %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ organ.name }}</td>
+                <td>{{ organ.donor_count }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center text-muted">No organs available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
